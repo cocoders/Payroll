@@ -1,0 +1,14 @@
+{
+    "require": {
+        "symfony/symfony-standard": "dev-master"
+    },
+    "require-dev": {
+        "behat/behat": "3.0.*@dev",
+        "phpspec/phpspec": "2.0.x-dev",
+        "phpunit/phpunit": "~4.0.7"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "autoload": {"psr-4": {"": "src"}}
+}
