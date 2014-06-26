@@ -1,4 +1,5 @@
 {
+    "name": "cocoders/payroll",
     "require": {
         "symfony/symfony-standard": "dev-master"
     },
