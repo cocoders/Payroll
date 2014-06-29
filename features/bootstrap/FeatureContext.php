@@ -77,9 +77,9 @@ class FeatureContext implements SnippetAcceptingContext, AddEmployeeResponder
             }
         );
 
-        $this->useCaseFactory->addUseCase('addSalariedEmployee', new AddSalariedEmployee($this->employeeFactory, $this->employeeRepository, $this->paymentClassificationFactory, $this->paymentScheduleFactory, $this));
-        $this->useCaseFactory->addUseCase('addHourlyEmployee', new AddHourlyEmployee($this->employeeFactory, $this->employeeRepository, $this->paymentClassificationFactory, $this->paymentScheduleFactory, $this));
-        $this->useCaseFactory->addUseCase('addCommissionedEmployee', new AddCommissionedEmployee($this->employeeFactory, $this->employeeRepository, $this->paymentClassificationFactory, $this->paymentScheduleFactory, $this));
+        $this->useCaseFactory->addUseCase('addSalariedEmployee', new AddSalariedEmployee($this->employeeFactory, $this->employeeRepository, $this->paymentClassificationFactory, $this->paymentScheduleFactory));
+        $this->useCaseFactory->addUseCase('addHourlyEmployee', new AddHourlyEmployee($this->employeeFactory, $this->employeeRepository, $this->paymentClassificationFactory, $this->paymentScheduleFactory));
+        $this->useCaseFactory->addUseCase('addCommissionedEmployee', new AddCommissionedEmployee($this->employeeFactory, $this->employeeRepository, $this->paymentClassificationFactory, $this->paymentScheduleFactory));
     }
 
     /**
@@ -127,6 +127,7 @@ class FeatureContext implements SnippetAcceptingContext, AddEmployeeResponder
         $hash = $table->getHash();
         $request = $this->requestBuilder->build($useCaseName, $hash[0]);
         $useCase = $this->useCaseFactory->create($useCaseName);
+        $useCase->addResponder($this);
 
         return $useCase->execute($request);
     }

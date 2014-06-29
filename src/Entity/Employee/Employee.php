@@ -4,12 +4,12 @@ namespace Entity\Employee;
 
 abstract class Employee
 {
-    private $id;
-    private $name;
-    private $address;
-    private $paymentMethod;
-    private $paymentClassification;
-    private $paymentSchedule;
+    protected $id;
+    protected $name;
+    protected $address;
+    protected $paymentMethod;
+    protected $paymentClassification;
+    protected $paymentSchedule;
 
     public function __construct($id, $name, $address)
     {

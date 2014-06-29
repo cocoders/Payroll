@@ -2,12 +2,14 @@
 
 namespace UseCase\AddEmployee;
 
+use Entity\Employee\Employee;
+
 class AddHourlyEmployee extends AddEmployee
 {
-    protected function createResponse(AddEmployeeRequest $request)
+    protected function createResponse(Employee $employee)
     {
         $response = new AddHourlyEmployeeResponseDTO();
-        $response->id = $request->id;
+        $response->id = $employee->getId();
 
         return $response;
     }

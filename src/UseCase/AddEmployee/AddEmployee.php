@@ -2,6 +2,7 @@
 
 namespace UseCase\AddEmployee;
 
+use Entity\Employee\Employee;
 use Entity\Employee\EmployeeFactory;
 use Entity\Employee\PaymentClassificationFactory;
 use Entity\Employee\PaymentScheduleFactory;
@@ -39,25 +40,32 @@ abstract class AddEmployee extends UseCase
 
     abstract protected function makePaymentClassification(AddEmployeeRequest $request);
 
-    abstract protected function createResponse(AddEmployeeRequest $request);
+    abstract protected function createResponse(Employee $employee);
 
     public function __construct(
         EmployeeFactory $employeeFactory,
         EmployeeRepository $employeeRepository,
         PaymentClassificationFactory $classificationFactory,
-        PaymentScheduleFactory $scheduleFactory,
-        AddEmployeeResponder $addEmployeeResponder
+        PaymentScheduleFactory $scheduleFactory
 
     ) {
         $this->employeeFactory = $employeeFactory;
         $this->employeeRepository = $employeeRepository;
-        $this->addEmployeeResponder = $addEmployeeResponder;
         $this->classificationFactory = $classificationFactory;
         $this->scheduleFactory = $scheduleFactory;
     }
 
+    public function addResponder($addEmployeeResponder)
+    {
+        $this->addEmployeeResponder = $addEmployeeResponder;
+    }
+
     public function execute(Request $request)
     {
+        if (!$this->addEmployeeResponder) {
+            throw new \InvalidArgumentException();
+        }
+
         if (!$request instanceof AddEmployeeRequest) {
             throw new \InvalidArgumentException();
         }
@@ -69,6 +77,6 @@ abstract class AddEmployee extends UseCase
 
         $this->employeeRepository->add($employee);
 
-        $this->addEmployeeResponder->success($this->createResponse($request));
+        return $this->addEmployeeResponder->success($this->createResponse($employee));
     }
 }
